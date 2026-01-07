@@ -1,0 +1,25 @@
+# Core ML Libraries
+tensorflow==2.15.0
+numpy==1.24.3
+pandas==2.0.3
+scikit-learn==1.3.0
+
+# Federated Learning
+flwr==1.6.0
+
+# Privacy Libraries
+opacus==1.4.0
+pycryptodome==3.19.0
+
+# Blockchain/Cryptography
+hashlib  # Built-in Python library
+json  # Built-in Python library
+
+# Frontend (Optional)
+streamlit==1.29.0
+matplotlib==3.7.2
+plotly==5.18.0
+
+# Utilities
+python-dotenv==1.0.0
+pyyaml==6.0.1
