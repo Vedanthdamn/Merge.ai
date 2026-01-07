@@ -46,6 +46,51 @@ Hospital C ──┘       (no raw patient data)
 
 ---
 
+## 🚀 Quick Start
+
+### Run Complete Integration Demo
+
+Test all privacy-preserving components together:
+
+```bash
+# Clone and setup
+git clone https://github.com/Vedanthdamn/Merge.ai.git
+cd Merge.ai
+
+# Install minimal dependencies
+pip install numpy pandas
+
+# Run complete demonstration
+python demo_integration.py
+```
+
+This demonstrates:
+- Hospital data partitioning (Non-IID)
+- Differential privacy on gradients
+- Secure multi-party computation
+- Blockchain audit logging
+- Complete privacy-preserving workflow
+
+**Output**: See how all components work together without exposing patient data!
+
+### Test Individual Components
+
+```bash
+# Data partitioning
+python src/utils/data_partitioner.py
+
+# Blockchain audit logging
+python src/blockchain/audit_log.py
+
+# Differential privacy
+python src/privacy/differential_privacy.py
+
+# Secure aggregation
+python src/privacy/smpc.py
+```
+
+---
+
 ## 🏗️ System Architecture
 
 This system implements multiple privacy-preserving techniques that can be used individually or in combination:

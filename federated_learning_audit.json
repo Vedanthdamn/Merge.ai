@@ -1,0 +1,102 @@
+[
+  {
+    "index": 0,
+    "timestamp": 1767803670.2805033,
+    "datetime": "2026-01-07T16:34:30.280503",
+    "data": {
+      "event": "blockchain_initialized",
+      "description": "Federated Learning Audit Log Started",
+      "system": "Healthcare Privacy-Preserving ML"
+    },
+    "previous_hash": "0",
+    "hash": "cc9d2fc3448d566fdc418ff2cc66c490a7e9862a5a7f08988dc7952649b7c9da"
+  },
+  {
+    "index": 1,
+    "timestamp": 1767803670.2813928,
+    "datetime": "2026-01-07T16:34:30.281393",
+    "data": {
+      "event": "training_round",
+      "round": 1,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v1_hash_49270",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "loss": 0.4,
+        "accuracy": 0.7
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "cc9d2fc3448d566fdc418ff2cc66c490a7e9862a5a7f08988dc7952649b7c9da",
+    "hash": "685102288e455ace7496fe535cd3c51a829a35da329d198de6ef6b87d72d52f9"
+  },
+  {
+    "index": 2,
+    "timestamp": 1767803670.2820826,
+    "datetime": "2026-01-07T16:34:30.282083",
+    "data": {
+      "event": "training_round",
+      "round": 2,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v2_hash_95092",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "loss": 0.3,
+        "accuracy": 0.8
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "685102288e455ace7496fe535cd3c51a829a35da329d198de6ef6b87d72d52f9",
+    "hash": "5995b09e41c3735351bc7b8417bb598dbc9d873900996b7277521a5b27e1e5b2"
+  },
+  {
+    "index": 3,
+    "timestamp": 1767803670.2828043,
+    "datetime": "2026-01-07T16:34:30.282804",
+    "data": {
+      "event": "training_round",
+      "round": 3,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v3_hash_32668",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "loss": 0.19999999999999996,
+        "accuracy": 0.9
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "5995b09e41c3735351bc7b8417bb598dbc9d873900996b7277521a5b27e1e5b2",
+    "hash": "1e1cde82a01ccbacbe5a6bd8725bd93347cb35d3692c765f525329b41f398f4a"
+  },
+  {
+    "index": 4,
+    "timestamp": 1767803670.282936,
+    "datetime": "2026-01-07T16:34:30.282936",
+    "data": {
+      "event": "privacy_audit",
+      "audit_type": "differential_privacy",
+      "results": {
+        "epsilon_budget": 1.0,
+        "rounds_completed": 3,
+        "compliant": true
+      }
+    },
+    "previous_hash": "1e1cde82a01ccbacbe5a6bd8725bd93347cb35d3692c765f525329b41f398f4a",
+    "hash": "9c78e14914828140030d3849cc7aa2a7c32cff8d4c66757b33f1b05a58483e52"
+  }
+]
