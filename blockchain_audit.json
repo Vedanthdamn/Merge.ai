@@ -1,0 +1,106 @@
+[
+  {
+    "index": 0,
+    "timestamp": 1767803564.0363035,
+    "datetime": "2026-01-07T16:32:44.036304",
+    "data": {
+      "event": "blockchain_initialized",
+      "description": "Federated Learning Audit Log Started",
+      "system": "Healthcare Privacy-Preserving ML"
+    },
+    "previous_hash": "0",
+    "hash": "48680c57453909c51322af34ad11b8bbac4d464db48d20f35f2dd3396b5151dc"
+  },
+  {
+    "index": 1,
+    "timestamp": 1767803564.036342,
+    "datetime": "2026-01-07T16:32:44.036342",
+    "data": {
+      "event": "training_round",
+      "round": 1,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "abc123def456...",
+      "aggregation_method": "FedAvg",
+      "metrics": {
+        "accuracy": 0.75,
+        "loss": 0.45
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "48680c57453909c51322af34ad11b8bbac4d464db48d20f35f2dd3396b5151dc",
+    "hash": "74f5ab757408e54e54e9095951095ecc008d467b4aca0bf78e7a28bcbdbbf400"
+  },
+  {
+    "index": 2,
+    "timestamp": 1767803564.1364517,
+    "datetime": "2026-01-07T16:32:44.136452",
+    "data": {
+      "event": "training_round",
+      "round": 2,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "def789ghi012...",
+      "aggregation_method": "FedAvg",
+      "metrics": {
+        "accuracy": 0.82,
+        "loss": 0.35
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "74f5ab757408e54e54e9095951095ecc008d467b4aca0bf78e7a28bcbdbbf400",
+    "hash": "2faa86e6e1629075011a1439a78807e0986645f13429e47c2ad50dac256469f6"
+  },
+  {
+    "index": 3,
+    "timestamp": 1767803564.236616,
+    "datetime": "2026-01-07T16:32:44.236616",
+    "data": {
+      "event": "model_evaluation",
+      "model_hash": "def789ghi012...",
+      "metrics": {
+        "test_accuracy": 0.81,
+        "test_auc": 0.85
+      },
+      "evaluated_by": 0
+    },
+    "previous_hash": "2faa86e6e1629075011a1439a78807e0986645f13429e47c2ad50dac256469f6",
+    "hash": "8a4e725801d6181c899ec1d6383011a36fbd4bc607beb3c1404cbea00598e02b"
+  },
+  {
+    "index": 4,
+    "timestamp": 1767803564.3367574,
+    "datetime": "2026-01-07T16:32:44.336757",
+    "data": {
+      "event": "model_deployment",
+      "model_hash": "def789ghi012...",
+      "deployment_location": "Hospital Network Production",
+      "approved_by": "Medical Director"
+    },
+    "previous_hash": "8a4e725801d6181c899ec1d6383011a36fbd4bc607beb3c1404cbea00598e02b",
+    "hash": "f0397d80be23a01b512213393fa41baa756c57cc0b6e0556026a4b61ff267b82"
+  },
+  {
+    "index": 5,
+    "timestamp": 1767803564.4368992,
+    "datetime": "2026-01-07T16:32:44.436899",
+    "data": {
+      "event": "privacy_audit",
+      "audit_type": "differential_privacy",
+      "results": {
+        "epsilon": 1.0,
+        "compliant": true
+      }
+    },
+    "previous_hash": "f0397d80be23a01b512213393fa41baa756c57cc0b6e0556026a4b61ff267b82",
+    "hash": "8739e5e49a0c1ffb4f9604538adf76bbf7d3c3571f80c92dd4815e304e689f62"
+  }
+]

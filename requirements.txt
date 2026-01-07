@@ -1,0 +1,29 @@
+# Core ML Libraries (minimal versions to save space)
+# Note: TensorFlow and related packages are large. Install only if needed.
+tensorflow>=2.16.0,<2.18.0
+numpy>=1.24.0,<1.27.0
+pandas>=2.0.0,<2.2.0
+scikit-learn>=1.3.0,<1.4.0
+
+# Federated Learning
+flwr>=1.6.0,<1.10.0
+
+# Privacy Libraries (optional - can install separately if needed)
+# Uncomment below if you want to use additional privacy libraries
+# opacus>=1.4.0
+# pycryptodome>=3.19.0
+
+# Frontend (optional - install separately when needed)
+# To run the Streamlit frontend, install with:
+# pip install streamlit>=1.29.0 matplotlib>=3.7.0 plotly>=5.18.0
+# streamlit>=1.29.0
+# matplotlib>=3.7.0
+# plotly>=5.18.0
+
+# Utilities (optional)
+# python-dotenv>=1.0.0
+# pyyaml>=6.0.0
+
+# Note: The core components (data partitioning, blockchain, privacy modules)
+# work with just numpy. Heavy dependencies (TensorFlow, Flower) are only
+# needed for training models and running federated learning.
