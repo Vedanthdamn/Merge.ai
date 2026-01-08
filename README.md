@@ -91,6 +91,106 @@ python src/privacy/smpc.py
 
 ---
 
+## 🌐 Inference API and Frontend
+
+### Running the Inference Server (FastAPI)
+
+The inference server provides a REST API for making predictions with the trained model:
+
+```bash
+# 1. Train the model first (if not already done)
+python src/baseline/model.py
+
+# 2. Start the FastAPI backend server
+cd backend
+python main.py
+# Server will run on http://localhost:8000
+```
+
+**API Endpoints:**
+- `GET /` - API information and health status
+- `GET /health` - Health check endpoint
+- `POST /predict` - Make predictions on patient data
+
+**Example API Request:**
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "age": 62.5,
+    "sex": 0,
+    "systolic_bp": 136.2,
+    "diastolic_bp": 93.3,
+    "cholesterol": 268.8,
+    "fasting_glucose": 70.0,
+    "bmi": 29.2,
+    "heart_rate": 98.4,
+    "smoking": 0,
+    "family_history": 1
+  }'
+```
+
+**API Response:**
+```json
+{
+  "probability": 0.6954,
+  "risk_class": "High Risk",
+  "confidence": 0.3908,
+  "disclaimer": "Research Prototype – Not for Clinical Use. Always consult qualified healthcare professionals."
+}
+```
+
+### Running the React Frontend
+
+The frontend provides a modern, user-friendly interface for making predictions:
+
+```bash
+# 1. Navigate to frontend directory
+cd frontend
+
+# 2. Install dependencies (first time only)
+npm install
+
+# 3. Start the development server
+npm run dev
+# Frontend will run on http://localhost:5173
+```
+
+**Frontend Features:**
+- Modern, clean healthcare UI with Tailwind CSS
+- Patient data input form with validation
+- Real-time predictions from the backend API
+- Visual display of risk classification and probability
+- Prominent disclaimers about research prototype status
+
+**Building for Production:**
+```bash
+cd frontend
+npm run build
+# Static files will be in frontend/dist/
+```
+
+### How Inference Works
+
+1. **Model Loading**: On startup, the FastAPI server loads:
+   - Trained neural network model (`models/baseline_model.h5`)
+   - Fitted preprocessing components (`models/imputer.pkl`, `models/scaler.pkl`)
+
+2. **Prediction Pipeline**:
+   - Frontend sends patient data as JSON
+   - Backend validates and preprocesses input using saved imputer and scaler
+   - Model makes prediction
+   - Results (probability, risk class, confidence) returned to frontend
+
+3. **Privacy & Security**:
+   - No patient data is stored
+   - CORS enabled for frontend communication
+   - All disclaimers prominently displayed
+
+**Note**: The inference API is separate from the research components (federated learning, differential privacy, etc.) and is designed only for model inference.
+
+---
+
 ## 🏗️ System Architecture
 
 This system implements multiple privacy-preserving techniques that can be used individually or in combination:
