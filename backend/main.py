@@ -24,6 +24,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.baseline.model import BaselineHealthcareModel
 
+# Compute BASE_DIR for absolute path resolution
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Healthcare ML Inference API",
@@ -92,7 +95,7 @@ async def load_model_on_startup():
     """Load the trained model and preprocessing components on server startup"""
     global model
     
-    model_path = "models/baseline_model.h5"
+    model_path = os.path.join(BASE_DIR, "models", "baseline_model.h5")
     
     if not os.path.exists(model_path):
         raise RuntimeError(
