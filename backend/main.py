@@ -19,13 +19,13 @@ import sys
 import os
 from typing import Optional
 
-# Add parent directory to path to import baseline model
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from src.baseline.model import BaselineHealthcareModel
-
 # Compute BASE_DIR for absolute path resolution
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add parent directory to path to import baseline model
+sys.path.append(BASE_DIR)
+
+from src.baseline.model import BaselineHealthcareModel
 
 # Initialize FastAPI app
 app = FastAPI(
