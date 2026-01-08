@@ -219,13 +219,19 @@ class BaselineHealthcareModel:
             imputer_path = os.path.join(base_path, "imputer.pkl")
             scaler_path = os.path.join(base_path, "scaler.pkl")
             
-            with open(imputer_path, 'wb') as f:
-                pickle.dump(self.imputer, f)
-            print(f"Imputer saved to {imputer_path}")
+            try:
+                with open(imputer_path, 'wb') as f:
+                    pickle.dump(self.imputer, f)
+                print(f"Imputer saved to {imputer_path}")
+            except Exception as e:
+                print(f"Warning: Failed to save imputer: {e}")
             
-            with open(scaler_path, 'wb') as f:
-                pickle.dump(self.scaler, f)
-            print(f"Scaler saved to {scaler_path}")
+            try:
+                with open(scaler_path, 'wb') as f:
+                    pickle.dump(self.scaler, f)
+                print(f"Scaler saved to {scaler_path}")
+            except Exception as e:
+                print(f"Warning: Failed to save scaler: {e}")
     
     def load_model(self, filepath):
         """Load a trained model from disk along with preprocessing components."""
@@ -238,16 +244,22 @@ class BaselineHealthcareModel:
         scaler_path = os.path.join(base_path, "scaler.pkl")
         
         if os.path.exists(imputer_path):
-            with open(imputer_path, 'rb') as f:
-                self.imputer = pickle.load(f)
-            print(f"Imputer loaded from {imputer_path}")
+            try:
+                with open(imputer_path, 'rb') as f:
+                    self.imputer = pickle.load(f)
+                print(f"Imputer loaded from {imputer_path}")
+            except Exception as e:
+                print(f"Warning: Failed to load imputer: {e}")
         else:
             print(f"Warning: Imputer not found at {imputer_path}")
         
         if os.path.exists(scaler_path):
-            with open(scaler_path, 'rb') as f:
-                self.scaler = pickle.load(f)
-            print(f"Scaler loaded from {scaler_path}")
+            try:
+                with open(scaler_path, 'rb') as f:
+                    self.scaler = pickle.load(f)
+                print(f"Scaler loaded from {scaler_path}")
+            except Exception as e:
+                print(f"Warning: Failed to load scaler: {e}")
         else:
             print(f"Warning: Scaler not found at {scaler_path}")
 

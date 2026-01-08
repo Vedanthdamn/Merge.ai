@@ -64,7 +64,8 @@ function App() {
       const result = await response.json()
       setPrediction(result)
     } catch (err) {
-      setError(err.message || 'Failed to get prediction. Make sure the backend server is running.')
+      setError('Failed to get prediction. Please check your input and try again.')
+      console.error('Prediction error:', err)
     } finally {
       setLoading(false)
     }
