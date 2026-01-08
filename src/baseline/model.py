@@ -23,6 +23,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 import os
+import pickle
 
 
 class BaselineHealthcareModel:
@@ -208,15 +209,59 @@ class BaselineHealthcareModel:
         }
     
     def save_model(self, filepath):
-        """Save the trained model to disk."""
+        """Save the trained model to disk along with preprocessing components."""
         if self.model is not None:
             self.model.save(filepath)
             print(f"Model saved to {filepath}")
+            
+            # Save imputer and scaler
+            base_path = os.path.dirname(filepath)
+            imputer_path = os.path.join(base_path, "imputer.pkl")
+            scaler_path = os.path.join(base_path, "scaler.pkl")
+            
+            try:
+                with open(imputer_path, 'wb') as f:
+                    pickle.dump(self.imputer, f)
+                print(f"Imputer saved to {imputer_path}")
+            except Exception as e:
+                print(f"Warning: Failed to save imputer: {e}")
+            
+            try:
+                with open(scaler_path, 'wb') as f:
+                    pickle.dump(self.scaler, f)
+                print(f"Scaler saved to {scaler_path}")
+            except Exception as e:
+                print(f"Warning: Failed to save scaler: {e}")
     
     def load_model(self, filepath):
-        """Load a trained model from disk."""
+        """Load a trained model from disk along with preprocessing components."""
         self.model = keras.models.load_model(filepath)
         print(f"Model loaded from {filepath}")
+        
+        # Load imputer and scaler
+        base_path = os.path.dirname(filepath)
+        imputer_path = os.path.join(base_path, "imputer.pkl")
+        scaler_path = os.path.join(base_path, "scaler.pkl")
+        
+        if os.path.exists(imputer_path):
+            try:
+                with open(imputer_path, 'rb') as f:
+                    self.imputer = pickle.load(f)
+                print(f"Imputer loaded from {imputer_path}")
+            except Exception as e:
+                print(f"Warning: Failed to load imputer: {e}")
+        else:
+            print(f"Warning: Imputer not found at {imputer_path}")
+        
+        if os.path.exists(scaler_path):
+            try:
+                with open(scaler_path, 'rb') as f:
+                    self.scaler = pickle.load(f)
+                print(f"Scaler loaded from {scaler_path}")
+            except Exception as e:
+                print(f"Warning: Failed to load scaler: {e}")
+        else:
+            print(f"Warning: Scaler not found at {scaler_path}")
 
 
 def load_healthcare_data(filepath, target_column='outcome', test_size=0.2, random_state=42):
