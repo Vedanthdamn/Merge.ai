@@ -19,8 +19,11 @@ import sys
 import os
 from typing import Optional
 
+# Compute BASE_DIR for absolute path resolution
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Add parent directory to path to import baseline model
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(BASE_DIR)
 
 from src.baseline.model import BaselineHealthcareModel
 
@@ -92,7 +95,7 @@ async def load_model_on_startup():
     """Load the trained model and preprocessing components on server startup"""
     global model
     
-    model_path = "models/baseline_model.h5"
+    model_path = os.path.join(BASE_DIR, "models", "baseline_model.h5")
     
     if not os.path.exists(model_path):
         raise RuntimeError(
