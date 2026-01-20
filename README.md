@@ -48,20 +48,41 @@ Hospital C ──┘       (no raw patient data)
 
 ## 🚀 Quick Start
 
-### Run Complete Integration Demo
+### 🆕 Run Benchmark Dataset Evaluation (NEW!)
 
-Test all privacy-preserving components together:
+Evaluate federated learning with comprehensive metrics:
 
 ```bash
 # Clone and setup
 git clone https://github.com/Vedanthdamn/Merge.ai.git
 cd Merge.ai
 
-# Install minimal dependencies
-pip install numpy pandas
+# Install dependencies
+pip install -r requirements.txt
 
+# Run with benchmark dataset (diabetes or breast_cancer)
+python demo_integration.py --dataset benchmark
+
+# Or run with SRM hospital dataset
+python demo_integration.py --dataset srm
+```
+
+**New Features:**
+- ✅ Benchmark datasets (diabetes, breast_cancer) ready out-of-the-box
+- ✅ SRM hospital dataset plug-in template (CSV with schema mapping)
+- ✅ Comprehensive metrics: model performance, FL metrics, privacy metrics, fairness
+- ✅ Automated report generation: `outputs/metrics.json`, `outputs/rounds_history.csv`
+- ✅ Visualization plots: accuracy/loss curves, confusion matrix, fairness charts
+
+**See [BENCHMARK_EVALUATION_GUIDE.md](BENCHMARK_EVALUATION_GUIDE.md) for detailed documentation.**
+
+### Run Complete Integration Demo
+
+Test all privacy-preserving components together:
+
+```bash
 # Run complete demonstration
-python demo_integration.py
+python demo_integration.py --dataset benchmark
 ```
 
 This demonstrates:
@@ -70,6 +91,7 @@ This demonstrates:
 - Secure multi-party computation
 - Blockchain audit logging
 - Complete privacy-preserving workflow
+- **Comprehensive metrics computation and reporting (NEW!)**
 
 **Output**: See how all components work together without exposing patient data!
 
@@ -78,6 +100,15 @@ This demonstrates:
 ```bash
 # Data partitioning
 python src/utils/data_partitioner.py
+
+# Dataset loader (NEW!)
+python src/utils/dataset_loader.py
+
+# SRM adapter (NEW!)
+python src/utils/srm_dataset_adapter.py
+
+# Metrics computer (NEW!)
+python src/evaluation/metrics.py
 
 # Blockchain audit logging
 python src/blockchain/audit_log.py
