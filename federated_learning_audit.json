@@ -1,20 +1,20 @@
 [
   {
     "index": 0,
-    "timestamp": 1768886860.0492716,
-    "datetime": "2026-01-20T05:27:40.049272",
+    "timestamp": 1768886955.017507,
+    "datetime": "2026-01-20T05:29:15.017507",
     "data": {
       "event": "blockchain_initialized",
       "description": "Federated Learning Audit Log Started",
       "system": "Healthcare Privacy-Preserving ML"
     },
     "previous_hash": "0",
-    "hash": "156d0f661ab7c30c03ab2948c860d6176f75bf40aac0720fc21adb6b464856e8"
+    "hash": "3eef966322cf83d72f3fffec4d67409754291423065a50f14bcd4bd0f451e2a9"
   },
   {
     "index": 1,
-    "timestamp": 1768886865.1140633,
-    "datetime": "2026-01-20T05:27:45.114063",
+    "timestamp": 1768886960.0375597,
+    "datetime": "2026-01-20T05:29:20.037560",
     "data": {
       "event": "training_round",
       "round": 1,
@@ -24,21 +24,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v1_4360671563845220694",
+      "model_hash": "model_v1_-952491732892757029",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5113636363636364,
-        "loss": 7.7499763129535575
+        "accuracy": 0.5454545454545454,
+        "loss": 5.999745909128393
       },
       "privacy_preserved": true
     },
-    "previous_hash": "156d0f661ab7c30c03ab2948c860d6176f75bf40aac0720fc21adb6b464856e8",
-    "hash": "09e8c3f1eb508a02b2b59483769088486e962017fe06d45284d1b7798a81a1ec"
+    "previous_hash": "3eef966322cf83d72f3fffec4d67409754291423065a50f14bcd4bd0f451e2a9",
+    "hash": "f755e25120a69da7a0af10d0646b68880512bb9ee21ae248de7d38903e4bdcd6"
   },
   {
     "index": 2,
-    "timestamp": 1768886869.9697604,
-    "datetime": "2026-01-20T05:27:49.969760",
+    "timestamp": 1768886964.7916348,
+    "datetime": "2026-01-20T05:29:24.791635",
     "data": {
       "event": "training_round",
       "round": 2,
@@ -48,15 +48,87 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v2_3133174810115049480",
+      "model_hash": "model_v2_5024777370435482858",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.42045454545454547,
-        "loss": 9.323198563673285
+        "accuracy": 0.5454545454545454,
+        "loss": 7.091255575852392
       },
       "privacy_preserved": true
     },
-    "previous_hash": "09e8c3f1eb508a02b2b59483769088486e962017fe06d45284d1b7798a81a1ec",
-    "hash": "69a014a72e068194c21a00faa777c9525addd5c91796c68f31d4751b71ba7cd6"
+    "previous_hash": "f755e25120a69da7a0af10d0646b68880512bb9ee21ae248de7d38903e4bdcd6",
+    "hash": "43806f355ae81e14634a404b52b7316e1c39771665f3e0a87382fa5376d735ba"
+  },
+  {
+    "index": 3,
+    "timestamp": 1768886969.3587859,
+    "datetime": "2026-01-20T05:29:29.358786",
+    "data": {
+      "event": "training_round",
+      "round": 3,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v3_4895496298609407648",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "accuracy": 0.5795454545454546,
+        "loss": 6.712999636476698
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "43806f355ae81e14634a404b52b7316e1c39771665f3e0a87382fa5376d735ba",
+    "hash": "55ea516fece63af08cdcb4dd9204fc5c42dbe183104ba19ebee013722dceebaf"
+  },
+  {
+    "index": 4,
+    "timestamp": 1768886974.2444904,
+    "datetime": "2026-01-20T05:29:34.244490",
+    "data": {
+      "event": "training_round",
+      "round": 4,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v4_2288220983922036896",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "accuracy": 0.6590909090909091,
+        "loss": 5.393613568761141
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "55ea516fece63af08cdcb4dd9204fc5c42dbe183104ba19ebee013722dceebaf",
+    "hash": "05668128bf9b1dffbc8df6b637a40d51d13b4ab79496017d8ce67bc41c452349"
+  },
+  {
+    "index": 5,
+    "timestamp": 1768886979.1166236,
+    "datetime": "2026-01-20T05:29:39.116624",
+    "data": {
+      "event": "training_round",
+      "round": 5,
+      "participating_hospitals": [
+        0,
+        1,
+        2
+      ],
+      "n_participants": 3,
+      "model_hash": "model_v5_4860470371685590913",
+      "aggregation_method": "FedAvg with DP and SMPC",
+      "metrics": {
+        "accuracy": 0.6590909090909091,
+        "loss": 5.45487108894371
+      },
+      "privacy_preserved": true
+    },
+    "previous_hash": "05668128bf9b1dffbc8df6b637a40d51d13b4ab79496017d8ce67bc41c452349",
+    "hash": "611d79a5ed318e797ffcae88b8eef265cfa189a20a3c6a4e893759255ae914bb"
   }
 ]
