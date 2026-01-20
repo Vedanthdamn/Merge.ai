@@ -541,11 +541,62 @@ def main():
         default='config.yaml',
         help="Path to configuration file"
     )
+    parser.add_argument(
+        '--clients',
+        type=int,
+        default=None,
+        help="Number of clients/hospitals (overrides config.yaml)"
+    )
+    parser.add_argument(
+        '--rounds',
+        type=int,
+        default=None,
+        help="Number of federated learning rounds (overrides config.yaml)"
+    )
+    parser.add_argument(
+        '--strategy',
+        type=str,
+        choices=['iid', 'non_iid', 'class_imbalance'],
+        default=None,
+        help="Data partitioning strategy (overrides config.yaml)"
+    )
+    parser.add_argument(
+        '--csv',
+        type=str,
+        default=None,
+        help="Path to CSV dataset (for SRM dataset)"
+    )
+    parser.add_argument(
+        '--schema',
+        type=str,
+        default=None,
+        help="Path to schema JSON file (for SRM dataset)"
+    )
     
     args = parser.parse_args()
     
     # Load configuration
     config = load_config(args.config)
+    
+    # Override config with CLI arguments if provided
+    if args.clients is not None:
+        config.setdefault('federated_learning', {})['n_clients'] = args.clients
+    
+    if args.rounds is not None:
+        config.setdefault('federated_learning', {})['n_rounds'] = args.rounds
+    
+    if args.strategy is not None:
+        config.setdefault('federated_learning', {})['partition_strategy'] = args.strategy
+    
+    if args.csv is not None:
+        config.setdefault('dataset', {}).setdefault('srm', {})['path'] = args.csv
+    
+    if args.schema is not None:
+        # Load schema from JSON file
+        import json
+        with open(args.schema, 'r') as f:
+            schema = json.load(f)
+        config.setdefault('dataset', {}).setdefault('srm', {})['schema'] = schema
     
     # Welcome message
     print("\n" + "="*80)
