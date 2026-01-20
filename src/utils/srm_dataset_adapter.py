@@ -333,7 +333,8 @@ def preprocess_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def encode_labels(y: np.ndarray) -> np.ndarray:
+def encode_labels(y: np.ndarray, 
+                 positive_label: Optional[str] = None) -> np.ndarray:
     """
     Encode labels to binary format (0/1).
     
@@ -344,12 +345,21 @@ def encode_labels(y: np.ndarray) -> np.ndarray:
     
     Args:
         y: Label array
+        positive_label: Optional. If provided, this value is mapped to 1.
+                       If not provided, the higher/second value when sorted is mapped to 1.
         
     Returns:
         Binary encoded labels (0/1)
         
     Raises:
         ValueError: If labels are not binary
+        
+    Examples:
+        >>> encode_labels(np.array(['No', 'Yes', 'Yes', 'No']), positive_label='Yes')
+        array([0, 1, 1, 0])
+        
+        >>> encode_labels(np.array([0, 1, 1, 0]))  # Already binary
+        array([0, 1, 1, 0])
     """
     unique_vals = np.unique(y)
     
@@ -363,13 +373,38 @@ def encode_labels(y: np.ndarray) -> np.ndarray:
         return y.astype(int)
     
     # Map to 0/1
-    # Lower/first value -> 0, higher/second value -> 1
-    sorted_vals = sorted(unique_vals)
-    mapping = {sorted_vals[0]: 0, sorted_vals[1]: 1}
+    if positive_label is not None:
+        # Use explicit positive label
+        if positive_label not in unique_vals:
+            raise ValueError(
+                f"Specified positive_label '{positive_label}' not found in labels. "
+                f"Available values: {unique_vals}"
+            )
+        mapping = {val: (1 if val == positive_label else 0) for val in unique_vals}
+        print(f"Encoded labels: {positive_label} -> 1, {[v for v in unique_vals if v != positive_label][0]} -> 0")
+    else:
+        # Auto-detect: try common patterns first
+        str_vals = [str(v).lower() for v in unique_vals]
+        
+        # Common positive indicators
+        if 'yes' in str_vals:
+            positive_label = unique_vals[str_vals.index('yes')]
+        elif 'true' in str_vals:
+            positive_label = unique_vals[str_vals.index('true')]
+        elif 'positive' in str_vals:
+            positive_label = unique_vals[str_vals.index('positive')]
+        elif '1' in str_vals:
+            positive_label = unique_vals[str_vals.index('1')]
+        else:
+            # Fall back to sorting (higher value -> 1)
+            sorted_vals = sorted(unique_vals)
+            positive_label = sorted_vals[1]
+        
+        mapping = {val: (1 if val == positive_label else 0) for val in unique_vals}
+        negative_label = [v for v in unique_vals if v != positive_label][0]
+        print(f"Encoded labels: {negative_label} -> 0, {positive_label} -> 1")
     
     encoded = np.array([mapping[val] for val in y])
-    
-    print(f"Encoded labels: {sorted_vals[0]} -> 0, {sorted_vals[1]} -> 1")
     
     return encoded
 

@@ -20,6 +20,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from typing import Dict, Tuple, Optional, List
 import os
+import sys
+
+# Add project root to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.data_partitioner import HospitalDataPartitioner
 
 
 class DatasetLoader:
@@ -352,9 +357,7 @@ def split_train_test(X: np.ndarray,
     Returns:
         Tuple of (X_train, X_test, y_train, y_test)
     """
-    from sklearn.model_selection import train_test_split as sklearn_split
-    
-    X_train, X_test, y_train, y_test = sklearn_split(
+    X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=seed, stratify=y
     )
     
@@ -381,15 +384,9 @@ def make_clients(X_train: np.ndarray,
     Returns:
         List of client data dictionaries: [{"X": X_client, "y": y_client}, ...]
     """
-    # Import locally to avoid circular import issues
-    import sys
-    import os
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from utils.data_partitioner import HospitalDataPartitioner
-    
     np.random.seed(seed)
     
-    # Use the existing partitioner
+    # Use the existing partitioner (imported at top)
     partitioner = HospitalDataPartitioner(
         n_hospitals=num_clients,
         partition_strategy=strategy

@@ -24,10 +24,17 @@ from sklearn.metrics import (
 )
 
 # Import from the actual implementation modules
-import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from evaluation.metrics import MetricsComputer
-from evaluation.metrics_tracker import MetricsTracker
+# Use try-except for flexible import resolution
+try:
+    from evaluation.metrics import MetricsComputer
+    from evaluation.metrics_tracker import MetricsTracker
+except ImportError:
+    # If running as a module from project root
+    import sys
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.insert(0, project_root)
+    from src.evaluation.metrics import MetricsComputer
+    from src.evaluation.metrics_tracker import MetricsTracker
 
 
 # ============================================================
