@@ -1,0 +1,102 @@
+# Configuration for Privacy-Preserving Federated Learning
+
+# Dataset Configuration
+dataset:
+  # Dataset type: 'benchmark' or 'srm'
+  type: 'benchmark'
+  
+  # Benchmark dataset options: 'diabetes', 'heart_disease', 'breast_cancer'
+  benchmark_name: 'diabetes'
+  
+  # For custom datasets (CSV/JSON)
+  custom_path: 'data/healthcare_data.csv'
+  
+  # SRM Hospital dataset configuration (used when type='srm')
+  srm:
+    path: 'data/srm_hospital_data.csv'
+    schema:
+      # Map SRM column names to expected names
+      feature_columns: ['age', 'sex', 'systolic_bp', 'diastolic_bp', 'cholesterol', 'fasting_glucose', 'bmi', 'heart_rate', 'smoking', 'family_history']
+      target_column: 'outcome'
+      patient_id_column: 'patient_id'  # Optional
+
+# Model Configuration
+model:
+  input_dim: null  # Will be auto-detected from data
+  hidden_layers: [64, 32]
+  dropout_rate: 0.3
+  learning_rate: 0.001
+
+# Federated Learning Configuration
+federated_learning:
+  n_clients: 3  # Number of hospitals/clients
+  n_rounds: 10  # Number of federated learning rounds
+  local_epochs: 5  # Local training epochs per round
+  batch_size: 32
+  min_clients: 2  # Minimum clients required
+  
+  # Data partitioning strategy
+  partition_strategy: 'non_iid'  # Options: 'iid', 'non_iid', 'class_imbalance'
+  non_iid_skew: 0.5  # Degree of non-IID-ness (0=IID, 1=highly skewed)
+  
+  # Client participation
+  client_fraction: 1.0  # Fraction of clients to use per round
+
+# Privacy Configuration
+privacy:
+  # Differential Privacy
+  differential_privacy:
+    enabled: true
+    epsilon: 1.0  # Privacy budget
+    delta: 1e-5
+    clip_norm: 1.0  # Gradient clipping threshold
+    noise_multiplier: 1.1
+  
+  # Secure Multi-Party Computation
+  smpc:
+    enabled: true
+    protocol: 'secure_aggregation'  # Simplified SMPC
+  
+  # Test multiple privacy budgets for tradeoff analysis
+  epsilon_range: [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+
+# Training Configuration
+training:
+  validation_split: 0.2
+  test_split: 0.2
+  random_seed: 42
+  early_stopping_patience: 5
+  verbose: 1
+
+# Output Configuration
+output:
+  base_dir: 'outputs'
+  save_metrics: true
+  save_plots: true
+  save_models: true
+  
+  # Output file names
+  metrics_json: 'metrics.json'
+  rounds_history_csv: 'rounds_history.csv'
+  
+  # Plot names
+  plots:
+    accuracy_vs_rounds: 'accuracy_vs_rounds.png'
+    loss_vs_rounds: 'loss_vs_rounds.png'
+    accuracy_vs_epsilon: 'accuracy_vs_epsilon.png'
+    loss_vs_epsilon: 'loss_vs_epsilon.png'
+    confusion_matrix: 'confusion_matrix.png'
+    client_accuracy_variance: 'client_accuracy_variance.png'
+
+# Metrics Configuration
+metrics:
+  # Which metrics to compute
+  compute_model_performance: true
+  compute_federated_metrics: true
+  compute_privacy_metrics: true
+  compute_fairness_metrics: true
+  compute_smpc_metrics: true  # Placeholders only
+  
+  # Convergence threshold for determining rounds needed
+  convergence_threshold: 0.01  # Stop if improvement < 1%
+  convergence_window: 3  # Number of rounds to check for convergence

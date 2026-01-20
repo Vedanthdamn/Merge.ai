@@ -1,0 +1,349 @@
+"""
+Dataset Loader Abstraction for Federated Learning
+
+This module provides a clean abstraction for loading various datasets:
+1. Benchmark datasets (scikit-learn built-in datasets)
+2. Custom CSV/JSON datasets with schema mapping
+3. SRM Hospital dataset with configurable schema
+
+The loader handles:
+- Data loading and preprocessing
+- Schema mapping for different data sources
+- Train/test splitting
+- Compatibility with federated learning pipelines
+"""
+
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_diabetes, load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from typing import Dict, Tuple, Optional, List
+import os
+
+
+class DatasetLoader:
+    """
+    Unified dataset loader supporting multiple data sources.
+    
+    Supports:
+    - Benchmark datasets (diabetes, breast_cancer)
+    - Custom CSV/JSON with schema configuration
+    - SRM hospital dataset adapter
+    """
+    
+    def __init__(self, random_seed: int = 42):
+        """
+        Initialize the dataset loader.
+        
+        Args:
+            random_seed: Random seed for reproducibility
+        """
+        self.random_seed = random_seed
+        np.random.seed(random_seed)
+        
+    def load_benchmark_dataset(self, dataset_name: str) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Load a benchmark dataset from scikit-learn.
+        
+        Args:
+            dataset_name: Name of the dataset ('diabetes', 'breast_cancer')
+            
+        Returns:
+            Tuple of (X, y) where X is features and y is target
+        """
+        print(f"Loading benchmark dataset: {dataset_name}")
+        
+        if dataset_name == 'diabetes':
+            # Diabetes dataset: regression -> convert to binary classification
+            data = load_diabetes()
+            X = data.data
+            y = data.target
+            # Convert to binary: above/below median
+            y = (y > np.median(y)).astype(int)
+            print(f"  Dataset: {X.shape[0]} samples, {X.shape[1]} features")
+            print(f"  Binary classes: {np.unique(y, return_counts=True)}")
+            
+        elif dataset_name == 'breast_cancer':
+            # Breast cancer dataset: already binary classification
+            data = load_breast_cancer()
+            X = data.data
+            y = data.target
+            print(f"  Dataset: {X.shape[0]} samples, {X.shape[1]} features")
+            print(f"  Classes: {np.unique(y, return_counts=True)}")
+            
+        else:
+            raise ValueError(
+                f"Unknown benchmark dataset: {dataset_name}. "
+                f"Supported: 'diabetes', 'breast_cancer'"
+            )
+        
+        return X, y
+    
+    def load_csv_dataset(self, 
+                        filepath: str, 
+                        schema_config: Optional[Dict] = None) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Load a custom CSV dataset with optional schema mapping.
+        
+        Args:
+            filepath: Path to CSV file
+            schema_config: Schema configuration dict with:
+                - feature_columns: List of feature column names
+                - target_column: Name of target column
+                - patient_id_column: Optional ID column to exclude
+                
+        Returns:
+            Tuple of (X, y)
+        """
+        print(f"Loading CSV dataset: {filepath}")
+        
+        if not os.path.exists(filepath):
+            raise FileNotFoundError(f"Dataset not found: {filepath}")
+        
+        df = pd.read_csv(filepath)
+        print(f"  Loaded CSV with shape: {df.shape}")
+        
+        # Apply schema configuration
+        if schema_config:
+            feature_cols = schema_config.get('feature_columns', None)
+            target_col = schema_config.get('target_column', 'outcome')
+            id_col = schema_config.get('patient_id_column', None)
+            
+            # Remove ID column if specified
+            if id_col and id_col in df.columns:
+                df = df.drop(columns=[id_col])
+                print(f"  Dropped ID column: {id_col}")
+            
+            # Select feature columns if specified
+            if feature_cols:
+                # Ensure target column is not in features
+                if target_col in feature_cols:
+                    feature_cols = [c for c in feature_cols if c != target_col]
+                X = df[feature_cols].values
+            else:
+                # Use all columns except target
+                X = df.drop(columns=[target_col]).values
+            
+            y = df[target_col].values
+            
+        else:
+            # Default: last column is target, rest are features
+            X = df.iloc[:, :-1].values
+            y = df.iloc[:, -1].values
+        
+        print(f"  Features shape: {X.shape}")
+        print(f"  Target distribution: {np.unique(y, return_counts=True)}")
+        
+        return X, y
+    
+    def load_json_dataset(self, 
+                         filepath: str, 
+                         schema_config: Optional[Dict] = None) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Load a custom JSON dataset with optional schema mapping.
+        
+        Args:
+            filepath: Path to JSON file
+            schema_config: Schema configuration (same as CSV)
+            
+        Returns:
+            Tuple of (X, y)
+        """
+        print(f"Loading JSON dataset: {filepath}")
+        
+        if not os.path.exists(filepath):
+            raise FileNotFoundError(f"Dataset not found: {filepath}")
+        
+        df = pd.read_json(filepath)
+        print(f"  Loaded JSON with shape: {df.shape}")
+        
+        # Same processing as CSV
+        if schema_config:
+            feature_cols = schema_config.get('feature_columns', None)
+            target_col = schema_config.get('target_column', 'outcome')
+            id_col = schema_config.get('patient_id_column', None)
+            
+            if id_col and id_col in df.columns:
+                df = df.drop(columns=[id_col])
+            
+            if feature_cols:
+                if target_col in feature_cols:
+                    feature_cols = [c for c in feature_cols if c != target_col]
+                X = df[feature_cols].values
+            else:
+                X = df.drop(columns=[target_col]).values
+            
+            y = df[target_col].values
+        else:
+            X = df.iloc[:, :-1].values
+            y = df.iloc[:, -1].values
+        
+        print(f"  Features shape: {X.shape}")
+        print(f"  Target distribution: {np.unique(y, return_counts=True)}")
+        
+        return X, y
+    
+    def load_dataset(self, 
+                    dataset_name: str, 
+                    dataset_path: Optional[str] = None,
+                    schema_config: Optional[Dict] = None) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Unified dataset loading function.
+        
+        This is the main entry point for loading any dataset.
+        
+        Args:
+            dataset_name: Name of dataset. Options:
+                - 'diabetes', 'breast_cancer' (benchmark datasets)
+                - 'csv' (custom CSV file)
+                - 'json' (custom JSON file)
+                - 'srm' (SRM hospital dataset)
+            dataset_path: Path to dataset file (required for csv/json/srm)
+            schema_config: Schema configuration for custom datasets
+            
+        Returns:
+            Tuple of (X, y) where X is features, y is binary target
+            
+        Examples:
+            # Load benchmark dataset
+            X, y = loader.load_dataset('diabetes')
+            
+            # Load custom CSV with schema
+            X, y = loader.load_dataset('csv', 'data/hospital.csv', 
+                                      {'target_column': 'disease'})
+            
+            # Load SRM dataset
+            X, y = loader.load_dataset('srm', 'data/srm_hospital_data.csv',
+                                      srm_schema_config)
+        """
+        print(f"\n{'='*60}")
+        print(f"Dataset Loader")
+        print(f"{'='*60}")
+        
+        # Benchmark datasets
+        if dataset_name in ['diabetes', 'breast_cancer']:
+            X, y = self.load_benchmark_dataset(dataset_name)
+        
+        # Custom CSV
+        elif dataset_name == 'csv':
+            if not dataset_path:
+                raise ValueError("dataset_path required for CSV datasets")
+            X, y = self.load_csv_dataset(dataset_path, schema_config)
+        
+        # Custom JSON
+        elif dataset_name == 'json':
+            if not dataset_path:
+                raise ValueError("dataset_path required for JSON datasets")
+            X, y = self.load_json_dataset(dataset_path, schema_config)
+        
+        # SRM hospital dataset (CSV with specific schema)
+        elif dataset_name == 'srm':
+            if not dataset_path:
+                raise ValueError("dataset_path required for SRM dataset")
+            X, y = self.load_csv_dataset(dataset_path, schema_config)
+        
+        else:
+            raise ValueError(
+                f"Unknown dataset: {dataset_name}. "
+                f"Supported: 'diabetes', 'breast_cancer', 'csv', 'json', 'srm'"
+            )
+        
+        print(f"{'='*60}\n")
+        
+        return X, y
+    
+    def prepare_federated_data(self,
+                              X: np.ndarray,
+                              y: np.ndarray,
+                              test_size: float = 0.2,
+                              val_size: float = 0.1) -> Dict:
+        """
+        Prepare data for federated learning.
+        
+        Splits data into train/val/test sets.
+        
+        Args:
+            X: Features
+            y: Target
+            test_size: Fraction for test set
+            val_size: Fraction of training set for validation
+            
+        Returns:
+            Dict with train/val/test splits
+        """
+        print(f"Preparing federated learning data splits...")
+        
+        # First split: train+val vs test
+        X_temp, X_test, y_temp, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=self.random_seed, stratify=y
+        )
+        
+        # Second split: train vs val
+        if val_size > 0:
+            X_train, X_val, y_train, y_val = train_test_split(
+                X_temp, y_temp, test_size=val_size, 
+                random_state=self.random_seed, stratify=y_temp
+            )
+        else:
+            X_train, y_train = X_temp, y_temp
+            X_val, y_val = None, None
+        
+        print(f"  Train: {X_train.shape[0]} samples")
+        if X_val is not None:
+            print(f"  Val: {X_val.shape[0]} samples")
+        print(f"  Test: {X_test.shape[0]} samples")
+        
+        return {
+            'X_train': X_train,
+            'y_train': y_train,
+            'X_val': X_val,
+            'y_val': y_val,
+            'X_test': X_test,
+            'y_test': y_test
+        }
+
+
+def main():
+    """Test the dataset loader."""
+    print("Testing Dataset Loader")
+    print("="*60)
+    
+    loader = DatasetLoader(random_seed=42)
+    
+    # Test benchmark datasets
+    print("\n1. Testing Benchmark Datasets")
+    print("-"*60)
+    
+    for dataset_name in ['diabetes', 'breast_cancer']:
+        print(f"\nLoading {dataset_name}...")
+        X, y = loader.load_dataset(dataset_name)
+        print(f"Shape: X={X.shape}, y={y.shape}")
+        
+        # Prepare splits
+        data_splits = loader.prepare_federated_data(X, y)
+        print("Data splits prepared successfully")
+    
+    # Test custom CSV if available
+    print("\n2. Testing Custom CSV Dataset")
+    print("-"*60)
+    
+    csv_path = "data/healthcare_data.csv"
+    if os.path.exists(csv_path):
+        schema = {
+            'feature_columns': ['age', 'sex', 'systolic_bp', 'diastolic_bp', 
+                              'cholesterol', 'fasting_glucose', 'bmi', 
+                              'heart_rate', 'smoking', 'family_history'],
+            'target_column': 'outcome'
+        }
+        X, y = loader.load_dataset('csv', csv_path, schema)
+        print(f"Shape: X={X.shape}, y={y.shape}")
+    else:
+        print(f"Skipping: {csv_path} not found")
+    
+    print("\n" + "="*60)
+    print("Dataset loader test complete!")
+
+
+if __name__ == "__main__":
+    main()
