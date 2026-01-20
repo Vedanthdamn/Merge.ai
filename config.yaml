@@ -13,7 +13,7 @@ dataset:
   
   # SRM Hospital dataset configuration (used when type='srm')
   srm:
-    path: 'data/srm_hospital_data.csv'
+    path: 'data/healthcare_data.csv'  # Use existing data as demo
     schema:
       # Map SRM column names to expected names
       feature_columns: ['age', 'sex', 'systolic_bp', 'diastolic_bp', 'cholesterol', 'fasting_glucose', 'bmi', 'heart_rate', 'smoking', 'family_history']

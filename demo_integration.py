@@ -221,6 +221,11 @@ def simulate_federated_learning(X: np.ndarray,
     )
     global_model.build_model()
     
+    # Fit preprocessor on all data (just for imputer/scaler)
+    # This simulates what would happen in practice where preprocessing
+    # statistics are shared among clients
+    global_model.preprocess_data(X, fit=True)
+    
     print("Global model architecture:")
     global_model.model.summary()
     
