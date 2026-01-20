@@ -304,42 +304,147 @@ class DatasetLoader:
         }
 
 
+# ============================================================
+# Standalone utility functions for easy imports
+# ============================================================
+
+def load_benchmark_dataset(n_samples: int = 1000, 
+                          n_features: int = 10, 
+                          seed: int = 42) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Load or create a benchmark dataset with specified parameters.
+    
+    This function creates synthetic data matching the demo_integration.py mock dataset.
+    For real benchmark datasets, use DatasetLoader class.
+    
+    Args:
+        n_samples: Number of samples to generate
+        n_features: Number of features
+        seed: Random seed for reproducibility
+        
+    Returns:
+        Tuple of (X, y) where X is features and y is binary labels
+    """
+    np.random.seed(seed)
+    
+    # Generate synthetic healthcare-like data
+    X = np.random.randn(n_samples, n_features)
+    
+    # Generate binary labels with ~50% positive rate
+    y = (X[:, 0] + X[:, 1] * 0.5 + np.random.randn(n_samples) * 0.5 > 0).astype(int)
+    
+    return X, y
+
+
+def split_train_test(X: np.ndarray, 
+                    y: np.ndarray, 
+                    test_size: float = 0.2, 
+                    seed: int = 42) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Split data into train and test sets.
+    
+    Args:
+        X: Feature data
+        y: Target labels
+        test_size: Fraction of data for testing (0.0 to 1.0)
+        seed: Random seed for reproducibility
+        
+    Returns:
+        Tuple of (X_train, X_test, y_train, y_test)
+    """
+    from sklearn.model_selection import train_test_split as sklearn_split
+    
+    X_train, X_test, y_train, y_test = sklearn_split(
+        X, y, test_size=test_size, random_state=seed, stratify=y
+    )
+    
+    return X_train, X_test, y_train, y_test
+
+
+def make_clients(X_train: np.ndarray,
+                y_train: np.ndarray,
+                num_clients: int = 3,
+                strategy: str = "non_iid",
+                seed: int = 42) -> List[Dict[str, np.ndarray]]:
+    """
+    Partition training data across multiple clients.
+    
+    Reuses the HospitalDataPartitioner logic for consistency.
+    
+    Args:
+        X_train: Training features
+        y_train: Training labels
+        num_clients: Number of clients to create
+        strategy: Partitioning strategy ('iid', 'non_iid', 'class_imbalance')
+        seed: Random seed for reproducibility
+        
+    Returns:
+        List of client data dictionaries: [{"X": X_client, "y": y_client}, ...]
+    """
+    # Import locally to avoid circular import issues
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from utils.data_partitioner import HospitalDataPartitioner
+    
+    np.random.seed(seed)
+    
+    # Use the existing partitioner
+    partitioner = HospitalDataPartitioner(
+        n_hospitals=num_clients,
+        partition_strategy=strategy
+    )
+    
+    hospital_data = partitioner.partition_data(X_train, y_train)
+    
+    # Convert to list of dicts format
+    clients = []
+    for client_id in range(num_clients):
+        X_client, y_client = hospital_data[client_id]
+        clients.append({"X": X_client, "y": y_client})
+    
+    return clients
+
+
 def main():
-    """Test the dataset loader."""
+    """Test the dataset loader with standalone functions."""
     print("Testing Dataset Loader")
     print("="*60)
     
-    loader = DatasetLoader(random_seed=42)
-    
-    # Test benchmark datasets
-    print("\n1. Testing Benchmark Datasets")
+    # Test 1: Standalone functions
+    print("\n1. Testing Standalone Functions")
     print("-"*60)
+    
+    # Load benchmark dataset
+    print("\nLoading benchmark dataset...")
+    X, y = load_benchmark_dataset(n_samples=1000, n_features=10, seed=42)
+    print(f"Dataset shape: X={X.shape}, y={y.shape}")
+    print(f"Label distribution: {np.unique(y, return_counts=True)}")
+    
+    # Split train/test
+    print("\nSplitting train/test...")
+    X_train, X_test, y_train, y_test = split_train_test(X, y, test_size=0.2, seed=42)
+    print(f"Train: X={X_train.shape}, y={y_train.shape}")
+    print(f"Test: X={X_test.shape}, y={y_test.shape}")
+    
+    # Make clients
+    print("\nCreating clients (non-IID)...")
+    clients = make_clients(X_train, y_train, num_clients=3, strategy="non_iid", seed=42)
+    print(f"Created {len(clients)} clients:")
+    for i, client in enumerate(clients):
+        print(f"  Client {i}: X={client['X'].shape}, y={client['y'].shape}, "
+              f"pos_rate={np.mean(client['y']):.2%}")
+    
+    # Test 2: Class-based loader
+    print("\n2. Testing Class-Based Loader")
+    print("-"*60)
+    
+    loader = DatasetLoader(random_seed=42)
     
     for dataset_name in ['diabetes', 'breast_cancer']:
         print(f"\nLoading {dataset_name}...")
         X, y = loader.load_dataset(dataset_name)
         print(f"Shape: X={X.shape}, y={y.shape}")
-        
-        # Prepare splits
-        data_splits = loader.prepare_federated_data(X, y)
-        print("Data splits prepared successfully")
-    
-    # Test custom CSV if available
-    print("\n2. Testing Custom CSV Dataset")
-    print("-"*60)
-    
-    csv_path = "data/healthcare_data.csv"
-    if os.path.exists(csv_path):
-        schema = {
-            'feature_columns': ['age', 'sex', 'systolic_bp', 'diastolic_bp', 
-                              'cholesterol', 'fasting_glucose', 'bmi', 
-                              'heart_rate', 'smoking', 'family_history'],
-            'target_column': 'outcome'
-        }
-        X, y = loader.load_dataset('csv', csv_path, schema)
-        print(f"Shape: X={X.shape}, y={y.shape}")
-    else:
-        print(f"Skipping: {csv_path} not found")
     
     print("\n" + "="*60)
     print("Dataset loader test complete!")
