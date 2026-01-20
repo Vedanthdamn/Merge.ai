@@ -17,9 +17,11 @@ uvicorn>=0.27.0
 # opacus>=1.4.0
 # pycryptodome>=3.19.0
 
-# Utilities (optional)
+# Utilities
+pyyaml>=6.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
 # python-dotenv>=1.0.0
-# pyyaml>=6.0.0
 
 # Note: The core components (data partitioning, blockchain, privacy modules)
 # work with just numpy. Heavy dependencies (TensorFlow, Flower) are only
