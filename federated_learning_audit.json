@@ -1,20 +1,20 @@
 [
   {
     "index": 0,
-    "timestamp": 1768881733.727278,
-    "datetime": "2026-01-20T04:02:13.727278",
+    "timestamp": 1768881995.5907967,
+    "datetime": "2026-01-20T04:06:35.590797",
     "data": {
       "event": "blockchain_initialized",
       "description": "Federated Learning Audit Log Started",
       "system": "Healthcare Privacy-Preserving ML"
     },
     "previous_hash": "0",
-    "hash": "6dac3e98a275c50ea9dda6e2e12e308706f02e0ff353bd0a4f3ac80c749512c1"
+    "hash": "38d9051547f6a6c8216e7fcf40b0b557103030c4f32ea8aa44b4ee415137b7cc"
   },
   {
     "index": 1,
-    "timestamp": 1768881738.7644472,
-    "datetime": "2026-01-20T04:02:18.764447",
+    "timestamp": 1768882000.5427663,
+    "datetime": "2026-01-20T04:06:40.542766",
     "data": {
       "event": "training_round",
       "round": 1,
@@ -24,21 +24,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v1_-1479370297452239691",
+      "model_hash": "model_v1_6052516622928481032",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.6477272727272727,
-        "loss": 5.406296291949899
+        "accuracy": 0.6136363636363636,
+        "loss": 5.590351492669234
       },
       "privacy_preserved": true
     },
-    "previous_hash": "6dac3e98a275c50ea9dda6e2e12e308706f02e0ff353bd0a4f3ac80c749512c1",
-    "hash": "fb368166034a8d55fc84c787dfc5a3c996b79f7eb3815f1eab66a8382c69e0b8"
+    "previous_hash": "38d9051547f6a6c8216e7fcf40b0b557103030c4f32ea8aa44b4ee415137b7cc",
+    "hash": "9c042a2fa96d09a190de3bec2ae809e3517015607c7eb3280bffa906901e33cf"
   },
   {
     "index": 2,
-    "timestamp": 1768881743.2134728,
-    "datetime": "2026-01-20T04:02:23.213473",
+    "timestamp": 1768882004.8910825,
+    "datetime": "2026-01-20T04:06:44.891083",
     "data": {
       "event": "training_round",
       "round": 2,
@@ -48,21 +48,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v2_8734974519777172109",
+      "model_hash": "model_v2_8217680012367573770",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5340909090909091,
-        "loss": 7.0250692314809156
+        "accuracy": 0.5681818181818182,
+        "loss": 6.620233239632489
       },
       "privacy_preserved": true
     },
-    "previous_hash": "fb368166034a8d55fc84c787dfc5a3c996b79f7eb3815f1eab66a8382c69e0b8",
-    "hash": "6313efce7634e216d3041173756363981f1c4d4655aa2a2d4a32c673b9b1dbc4"
+    "previous_hash": "9c042a2fa96d09a190de3bec2ae809e3517015607c7eb3280bffa906901e33cf",
+    "hash": "1cd2b30ab2480391aa43c905c4a34ae5e7756acfe9b6099994de4be2f401b83c"
   },
   {
     "index": 3,
-    "timestamp": 1768881747.8801303,
-    "datetime": "2026-01-20T04:02:27.880130",
+    "timestamp": 1768882009.4939802,
+    "datetime": "2026-01-20T04:06:49.493980",
     "data": {
       "event": "training_round",
       "round": 3,
@@ -72,21 +72,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v3_5733558486266045226",
+      "model_hash": "model_v3_-3463037059786119772",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5454545454545454,
-        "loss": 7.142950453245223
+        "accuracy": 0.5568181818181818,
+        "loss": 7.028381551989622
       },
       "privacy_preserved": true
     },
-    "previous_hash": "6313efce7634e216d3041173756363981f1c4d4655aa2a2d4a32c673b9b1dbc4",
-    "hash": "ed55adfe14a115697f6566379d39e606faecd51c5f038f2a89db3c089d89e3c9"
+    "previous_hash": "1cd2b30ab2480391aa43c905c4a34ae5e7756acfe9b6099994de4be2f401b83c",
+    "hash": "6a44da2a1e54480cf71cb8c696e6e45460bc8f1c0d8b6ac4868c7fa07685ff12"
   },
   {
     "index": 4,
-    "timestamp": 1768881752.3116183,
-    "datetime": "2026-01-20T04:02:32.311618",
+    "timestamp": 1768882013.7821734,
+    "datetime": "2026-01-20T04:06:53.782173",
     "data": {
       "event": "training_round",
       "round": 4,
@@ -96,21 +96,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v4_-6311587309551441103",
+      "model_hash": "model_v4_-3455389696390406881",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.6136363636363636,
-        "loss": 6.193501914089384
+        "accuracy": 0.6477272727272727,
+        "loss": 5.65001152997668
       },
       "privacy_preserved": true
     },
-    "previous_hash": "ed55adfe14a115697f6566379d39e606faecd51c5f038f2a89db3c089d89e3c9",
-    "hash": "bc3aaea435b8e67736f0b929057c527337347c3727757658c8359269f3a62e68"
+    "previous_hash": "6a44da2a1e54480cf71cb8c696e6e45460bc8f1c0d8b6ac4868c7fa07685ff12",
+    "hash": "034b69e0e012652faf0b45c2721c1e587f9fea054fc6ab6657791c28398a90e1"
   },
   {
     "index": 5,
-    "timestamp": 1768881757.0596795,
-    "datetime": "2026-01-20T04:02:37.059680",
+    "timestamp": 1768882018.4030545,
+    "datetime": "2026-01-20T04:06:58.403054",
     "data": {
       "event": "training_round",
       "round": 5,
@@ -120,21 +120,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v5_-2979712328423218751",
+      "model_hash": "model_v5_1762649061987347851",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.625,
-        "loss": 6.000261579047559
+        "accuracy": 0.6477272727272727,
+        "loss": 5.634038776198322
       },
       "privacy_preserved": true
     },
-    "previous_hash": "bc3aaea435b8e67736f0b929057c527337347c3727757658c8359269f3a62e68",
-    "hash": "552bed7992bdc0ff9582117519f662a657290ee7d57293f73781a41abe386df7"
+    "previous_hash": "034b69e0e012652faf0b45c2721c1e587f9fea054fc6ab6657791c28398a90e1",
+    "hash": "00b6841fb1b2ede64235c322f3896a5b7b59e1a29ae7b1de29a2e94a9c17fa2f"
   },
   {
     "index": 6,
-    "timestamp": 1768881761.514241,
-    "datetime": "2026-01-20T04:02:41.514241",
+    "timestamp": 1768882022.7592177,
+    "datetime": "2026-01-20T04:07:02.759218",
     "data": {
       "event": "training_round",
       "round": 6,
@@ -144,21 +144,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v6_8213507178013090423",
+      "model_hash": "model_v6_-2123478967962819354",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5227272727272727,
-        "loss": 7.622845694877146
+        "accuracy": 0.5568181818181818,
+        "loss": 7.077355386181319
       },
       "privacy_preserved": true
     },
-    "previous_hash": "552bed7992bdc0ff9582117519f662a657290ee7d57293f73781a41abe386df7",
-    "hash": "28fce15b3d72430de1295e963cf98ac05c6fd19735f7c82385bd822c155eb81e"
+    "previous_hash": "00b6841fb1b2ede64235c322f3896a5b7b59e1a29ae7b1de29a2e94a9c17fa2f",
+    "hash": "ef446ccd59f08af41e80824a2e797ea8fc2b123dc9dba15451a7064d7b9398da"
   },
   {
     "index": 7,
-    "timestamp": 1768881765.9358225,
-    "datetime": "2026-01-20T04:02:45.935822",
+    "timestamp": 1768882027.1892617,
+    "datetime": "2026-01-20T04:07:07.189262",
     "data": {
       "event": "training_round",
       "round": 7,
@@ -168,21 +168,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v7_6347307459008728944",
+      "model_hash": "model_v7_8783159865027190161",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5568181818181818,
-        "loss": 7.113296206701893
+        "accuracy": 0.5681818181818182,
+        "loss": 6.932132745330992
       },
       "privacy_preserved": true
     },
-    "previous_hash": "28fce15b3d72430de1295e963cf98ac05c6fd19735f7c82385bd822c155eb81e",
-    "hash": "60fd5b32b7594121152c3b4e95d9981bbce4d7b63ee5ad025def0d57de9e7060"
+    "previous_hash": "ef446ccd59f08af41e80824a2e797ea8fc2b123dc9dba15451a7064d7b9398da",
+    "hash": "90b7b7717814e9059d81b1598236acd54fdec3a7bb92f338e4c309eea6fb47bc"
   },
   {
     "index": 8,
-    "timestamp": 1768881770.7649233,
-    "datetime": "2026-01-20T04:02:50.764923",
+    "timestamp": 1768882032.1836464,
+    "datetime": "2026-01-20T04:07:12.183646",
     "data": {
       "event": "training_round",
       "round": 8,
@@ -192,21 +192,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v8_-8146495379983285768",
+      "model_hash": "model_v8_1333317199361601187",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5681818181818182,
-        "loss": 6.934129457582134
+        "accuracy": 0.5795454545454546,
+        "loss": 6.75096928396009
       },
       "privacy_preserved": true
     },
-    "previous_hash": "60fd5b32b7594121152c3b4e95d9981bbce4d7b63ee5ad025def0d57de9e7060",
-    "hash": "95a85f8843d977c1c16d3b177f292eaeb1ef232a03d46a85b41ea1922fbfd002"
+    "previous_hash": "90b7b7717814e9059d81b1598236acd54fdec3a7bb92f338e4c309eea6fb47bc",
+    "hash": "7b078a35a5f5a197f8b4ecc1236bba503f9cc6d20f41a7b9969fb155720c6ae3"
   },
   {
     "index": 9,
-    "timestamp": 1768881775.1832008,
-    "datetime": "2026-01-20T04:02:55.183201",
+    "timestamp": 1768882036.5675583,
+    "datetime": "2026-01-20T04:07:16.567558",
     "data": {
       "event": "training_round",
       "round": 9,
@@ -216,21 +216,21 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v9_7104807071997987893",
+      "model_hash": "model_v9_781845042661734097",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.48863636363636365,
-        "loss": 8.03896749696949
+        "accuracy": 0.4318181818181818,
+        "loss": 9.064444246617237
       },
       "privacy_preserved": true
     },
-    "previous_hash": "95a85f8843d977c1c16d3b177f292eaeb1ef232a03d46a85b41ea1922fbfd002",
-    "hash": "af5635e1572483246fe8660eb0fcea22e80d254b3932bc1743c4e76c96a0cb57"
+    "previous_hash": "7b078a35a5f5a197f8b4ecc1236bba503f9cc6d20f41a7b9969fb155720c6ae3",
+    "hash": "f2a9247d9966539788d5a15e94ff6b88e756719e813567fe1035b72022b5ba42"
   },
   {
     "index": 10,
-    "timestamp": 1768881779.6026428,
-    "datetime": "2026-01-20T04:02:59.602643",
+    "timestamp": 1768882040.9156158,
+    "datetime": "2026-01-20T04:07:20.915616",
     "data": {
       "event": "training_round",
       "round": 10,
@@ -240,15 +240,15 @@
         2
       ],
       "n_participants": 3,
-      "model_hash": "model_v10_1569878060736618064",
+      "model_hash": "model_v10_354620579088826061",
       "aggregation_method": "FedAvg with DP and SMPC",
       "metrics": {
-        "accuracy": 0.5,
-        "loss": 7.996874433021407
+        "accuracy": 0.4772727272727273,
+        "loss": 8.361473313786773
       },
       "privacy_preserved": true
     },
-    "previous_hash": "af5635e1572483246fe8660eb0fcea22e80d254b3932bc1743c4e76c96a0cb57",
-    "hash": "feca008e5a00d9d1063cbe21bd9eec127fa97a92cc92de30f94edfbf4c288dae"
+    "previous_hash": "f2a9247d9966539788d5a15e94ff6b88e756719e813567fe1035b72022b5ba42",
+    "hash": "6dbd19aed4b8ee56f82faf6d18c84f5309bdb349807ca01c0987ff3aa4009275"
   }
 ]
